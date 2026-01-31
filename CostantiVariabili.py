@@ -1,0 +1,2 @@
+#PRODUZIONE MEDIA LATTE DI UNA MUCCA
+latteMedioGiorno = 40

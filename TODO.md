@@ -11,7 +11,4 @@ Per mantenere una visualizazione più chiara e pulita, andrò a suddividere il p
 Sto pensando di divideere il progetto in più fasi.
 La prima fase riguarda la parte dove vado a dichiarare tutti i componenti che verranno presi in considerazione per la statistica del rendimento.
 
-SETP UNO.
-Definisco l'immobile aziendale.
 
-.Quanti ettari di terra coltivabile si ha a disposizione (per evitare di complicare troppo il processo, andrò a stimare circa il 50% del fabbisogno totale per sfamare il bestiame) il resto lo andrò ad acquistare sul mercato.
