@@ -11,4 +11,7 @@ Per mantenere una visualizazione più chiara e pulita, andrò a suddividere il p
 Sto pensando di divideere il progetto in più fasi.
 La prima fase riguarda la parte dove vado a dichiarare tutti i componenti che verranno presi in considerazione per la statistica del rendimento.
 
+SETP 1 = DELINEARE PRODUZIONE LATTE GIORNALIERA MEDIA GENERALE (FATTO)
+STEP 2 = DELINEARE PRODUZIONE LATTE GIORNALIERA IN BASE ALLA RAZZA
+STEP 3 = DELINARE PRODUZIONE LATTE GIORNALIERA IN BASE ALLE        CONDIZIONI GENERARLI DELL'ANIMALE / RAZZA / E ALTRI PARAMETRI
 
