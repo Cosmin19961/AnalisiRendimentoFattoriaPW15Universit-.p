@@ -41,12 +41,11 @@ def Pastorizzazione(litriLatte):
 
 #modello ti dipo : VASCA 300/L H
 def ConsumoElettricoPastorizzazione(numero_vasche):
-    consumo_kw_ore_di_lavoro = dati.ore_lavoro_vasche_giorno * dati.consumo_vasca_KWh
+    consumo_kw_ore_di_lavoro = dati.ore_lavoro_vasche_giorno * dati.consumo_vasca_KWh * numero_vasche
     costo_consumo_kw_ore_di_lavoro = consumo_kw_ore_di_lavoro * dati.costo_kwh_medio
-    return consumo_kw_ore_di_lavoro,costo_consumo_kw_ore_di_lavoro
+    return print(f"Consumo {consumo_kw_ore_di_lavoro}.KWh su {dati.ore_lavoro_vasche_giorno} ore di utilizzo.Costo {costo_consumo_kw_ore_di_lavoro:.2f} Euro")
 
-prova_costo_consumo = ConsumoElettricoPastorizzazione(1)
-print(prova_costo_consumo)
+prova_costo_consumo = ConsumoElettricoPastorizzazione(dati.numero_vasche_pastorizzazione)
 
 #Quanto dura il confezionamento ?
 #Obiettivo sapere quanti latte pastorizzato ottengo in 365 giorni x una mucca
