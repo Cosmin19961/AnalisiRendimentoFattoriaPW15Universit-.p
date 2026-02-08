@@ -1,5 +1,5 @@
 #VARIABILI GLOBALI
-stima_su_quanti_giorni = 1
+stima_su_quanti_giorni = 365
 unita_di_misura = 1
 
 #SETTING
