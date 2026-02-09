@@ -43,45 +43,37 @@ def ConsumoElettricoPastorizzazione(numero_vasche,giorni):
 #Quello che fa la differenza è : 
 
 #LATTE PRODOTTO AL GIORNO
-def prod_latte_giorno(latte_A,latte_B,mandria_A,mandria_B):
-    prod_latte_A = latte_A * mandria_A
-    prod_latte_B = latte_B * mandria_B
-    tot_prod_latte_giorno = prod_latte_A + prod_latte_B
-    return tot_prod_latte_giorno
+def prod_latte_giorno(latte_A,latte_B,mandria_A,mandria_B,scarto_mungitura,scarto_macchinari):
+    tot_prod_latte_giorno = (latte_A * mandria_A) + (latte_B * mandria_B)
+    tot_scarto = (scarto_mungitura + scarto_macchinari) * tot_prod_latte_giorno
+    tot_latte_realistico_giorno = tot_prod_latte_giorno - tot_scarto
+    return tot_latte_realistico_giorno
 
 latte_A= Bestiame_litri_giorno["A"]
 latte_B= Bestiame_litri_giorno["B"]
 mandria_A= dati.mandria_A
 mandria_B= dati.mandria_B
+scarto_mungitura = dati.scarto_mungitura
+scarto_macchinari = dati.scarto_macchinari
 
-latte_totale_giorno = prod_latte_giorno(latte_A,latte_B,mandria_A,mandria_B)
+latte_totale_giorno = prod_latte_giorno(latte_A,latte_B,mandria_A,mandria_B,scarto_mungitura,scarto_macchinari)
 print(f"{latte_totale_giorno:.2f} Litri/Giorno")
 
 #CAPACITA MASSIMA DI PASTORIZZAZIONE
-# Quante vasche ho / Quanta capacità di pastorizzazione hanno / Quante ore al giorno funzionano / Tolgo lo scarto 
 numero_vasche = dati.numero_vasche_pastorizzazione 
 capacità_vasca = dati.capacita_vasca 
 ore_funzionamento = dati.ore_lavoro_vasche_giorno 
-scarto_pastorizzazione = dati.scarto_pastorizzazione 
-quanti_giorni = dati.stima_su_quanti_giorni 
-#numero vasche * capacità * ore di funzionamento = capacità totale al giorno
-#calcolo 5% della "capacità totale al giorno"
-#Faccio la differenza tra lo scarto e capacità totale al giorno
-def collo_bottigli_pastorizzazione_giorno(numeroVasche,capacitaVasca,oreFunzionamento,scarto,giorniLavorazione):
-    capacità_totale = numeroVasche * capacitaVasca * oreFunzionamento * giorniLavorazione
-    scarto_lavorazione = scarto * capacità_totale
-    capacità_totale_reale = capacità_totale - scarto_lavorazione
-    return capacità_totale_reale
 
-pastorizzazione_reale_giorno_totale = collo_bottigli_pastorizzazione_giorno(numero_vasche,capacità_vasca,ore_funzionamento,scarto_pastorizzazione,quanti_giorni)
-print(pastorizzazione_reale_giorno_totale)
+def collo_bottigli_pastorizzazione_giorno(numeroVasche,capacitaVasca,oreFunzionamento):
+    capacità_totale = numeroVasche * capacitaVasca * oreFunzionamento
+    return capacità_totale
+
+pastorizzazione_reale_giorno_totale = collo_bottigli_pastorizzazione_giorno(numero_vasche,capacità_vasca,ore_funzionamento)
+print("Capacità massima di pastorizzazione :",pastorizzazione_reale_giorno_totale)
 
 # come creare la capacità massima di pastorizzazione giornaliera
 # latte_prodotto_giorno
 # capacita_pastorizzazione_giorno
-
-
-
 
 #Prossimi step
 #1) Calcola la produzione giornaliera di latte per 1 mucca (per tipo A/B/C)- FATTO
