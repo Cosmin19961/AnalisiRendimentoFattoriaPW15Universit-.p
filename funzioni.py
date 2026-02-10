@@ -56,8 +56,8 @@ mandria_B= dati.mandria_B
 scarto_mungitura = dati.scarto_mungitura
 scarto_macchinari = dati.scarto_macchinari
 
-latte_totale_giorno = prod_latte_giorno(latte_A,latte_B,mandria_A,mandria_B,scarto_mungitura,scarto_macchinari)
-print(f"{latte_totale_giorno:.2f} Litri/Giorno")
+# latte_totale_giorno = prod_latte_giorno(latte_A,latte_B,mandria_A,mandria_B,scarto_mungitura,scarto_macchinari)
+# print(f"{latte_totale_giorno:.2f} Litri/Giorno")
 
 #CAPACITA MASSIMA DI PASTORIZZAZIONE
 numero_vasche = dati.numero_vasche_pastorizzazione 
@@ -71,14 +71,27 @@ def collo_bottigli_pastorizzazione_giorno(numeroVasche,capacitaVasca,oreFunziona
 pastorizzazione_reale_giorno_totale = collo_bottigli_pastorizzazione_giorno(numero_vasche,capacità_vasca,ore_funzionamento)
 print("Capacità massima di pastorizzazione :",pastorizzazione_reale_giorno_totale)
 
-# come creare la capacità massima di pastorizzazione giornaliera
-# latte_prodotto_giorno
-# capacita_pastorizzazione_giorno
+#ECCESSO DI PRODUZZIONE
+#IN QUESTA SEZIONE GESTISCO L'ECCESSO DI PRODUZIONE CHE NON VIENE PASTORIZZATO PER MANCANZA DI IMPIANTI
+latte_giornalieto_munto = prod_latte_giorno(latte_A,latte_B,mandria_A,mandria_B,scarto_mungitura,scarto_macchinari) 
+capacita_massima_past_giorno = collo_bottigli_pastorizzazione_giorno(numero_vasche,capacità_vasca,ore_funzionamento)#qui metto la capacità massima di pastorizzazione
+#qui controllo l'avanzo
+#Ho aggiunto la variabil eccesso, che poi utilizzerò per il latte in eccesso
+latte_avanzato = 0
+latte_pastorizzato = 0
 
-#Prossimi step
-#1) Calcola la produzione giornaliera di latte per 1 mucca (per tipo A/B/C)- FATTO
-#2) CALCOLO CAPACITà MASSIMA DI PRODUZIONE LATTE PASTORIZZATO- FATTO
-#3) CALCOLO LA CAPACITà CONSIDERANDO UNO SCARTO DI LAVORAZIONE- FATTO
+if(latte_giornalieto_munto > capacita_massima_past_giorno): 
+    latte_avanzato = latte_giornalieto_munto - capacita_massima_past_giorno 
+    latte_pastorizzato = capacita_massima_past_giorno
+
+elif latte_giornalieto_munto <= capacita_massima_past_giorno:
+    latte_pastorizzato = latte_giornalieto_munto
+
+print(f"Abbiamo avanzato {latte_avanzato:.2f} litri di latte")
+vendita_latte_crudo = latte_avanzato * dati.prezzo_latte_crudo 
+print(f"Abbiamo ricavato {vendita_latte_crudo:.2f} Euro dalla vendità del latte crudo")
+vendita_latte_pastorizzato = latte_pastorizzato * dati.prezzo_latte_pastorizzato
+print(f"Abbiamo ricavato {vendita_latte_pastorizzato:.2f} Euro dalla vendità del latte pastorizzato")
 
 #Definisco 3 output attesi dal programma 
 #Latte intero / Yogurt / Formaggio Stagionato
