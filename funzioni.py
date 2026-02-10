@@ -47,7 +47,7 @@ def prod_latte_giorno(latte_A,latte_B,mandria_A,mandria_B,scarto_mungitura,scart
     tot_prod_latte_giorno = (latte_A * mandria_A) + (latte_B * mandria_B)
     tot_scarto = (scarto_mungitura + scarto_macchinari) * tot_prod_latte_giorno
     tot_latte_realistico_giorno = tot_prod_latte_giorno - tot_scarto
-    return tot_latte_realistico_giorno
+    return tot_latte_realistico_giorno,tot_prod_latte_giorno
 
 latte_A= Bestiame_litri_giorno["A"]
 latte_B= Bestiame_litri_giorno["B"]
@@ -75,6 +75,7 @@ print("Capacità massima di pastorizzazione :",pastorizzazione_reale_giorno_tota
 #IN QUESTA SEZIONE GESTISCO L'ECCESSO DI PRODUZIONE CHE NON VIENE PASTORIZZATO PER MANCANZA DI IMPIANTI
 latte_giornalieto_munto = prod_latte_giorno(latte_A,latte_B,mandria_A,mandria_B,scarto_mungitura,scarto_macchinari) 
 capacita_massima_past_giorno = collo_bottigli_pastorizzazione_giorno(numero_vasche,capacità_vasca,ore_funzionamento)#qui metto la capacità massima di pastorizzazione
+_, latte_atteso = latte_giornalieto_munto = prod_latte_giorno(latte_A,latte_B,mandria_A,mandria_B,scarto_mungitura,scarto_macchinari) 
 #qui controllo l'avanzo
 #Ho aggiunto la variabil eccesso, che poi utilizzerò per il latte in eccesso
 latte_avanzato = 0
@@ -84,14 +85,23 @@ if(latte_giornalieto_munto > capacita_massima_past_giorno):
     latte_avanzato = latte_giornalieto_munto - capacita_massima_past_giorno 
     latte_pastorizzato = capacita_massima_past_giorno
 
-elif latte_giornalieto_munto <= capacita_massima_past_giorno:
+else:
     latte_pastorizzato = latte_giornalieto_munto
 
+########.   REPORT SEZIONE PASTORIZZAZIONE LATTE E VENDITA / ANCHE SUL CRUDO .####################
+print(f"Scarto Mungitura {dati.scarto_mungitura * 100} %")
+print(f"Scarto Macchinari {dati.scarto_macchinari * 100} %")
+#Latte torico (senza scarto)
+print(f"Latte munto Atteso : {latte_atteso}")
+#Latte munto con lo scarto 
 print(f"Abbiamo avanzato {latte_avanzato:.2f} litri di latte")
 vendita_latte_crudo = latte_avanzato * dati.prezzo_latte_crudo 
 print(f"Abbiamo ricavato {vendita_latte_crudo:.2f} Euro dalla vendità del latte crudo")
 vendita_latte_pastorizzato = latte_pastorizzato * dati.prezzo_latte_pastorizzato
 print(f"Abbiamo ricavato {vendita_latte_pastorizzato:.2f} Euro dalla vendità del latte pastorizzato")
+
+
+
 
 #Definisco 3 output attesi dal programma 
 #Latte intero / Yogurt / Formaggio Stagionato
