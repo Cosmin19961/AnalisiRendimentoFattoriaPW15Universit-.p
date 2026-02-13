@@ -2,24 +2,24 @@ import dati
 
 ################## SEZIONE PRODUZIONE LATTE #####################################
 ############## ############ ############# ############### ################# ##############
-#Composizione Bestiame / Produzione latte annuale in KG
+# L/Anno 
 Bestiame = {"A":10977, "B":7425, "C":7415}
-#quanto latte produco al giorno?
-#Creo un nuovo dizionario, in cui ci metto i valori divisi per 305
+
+# L / Giorno
 Bestiame_litri_giorno = {}
 for razza,litri in Bestiame.items():
     Bestiame_litri_giorno[razza] = litri / dati.mucca_lattazione
 
-#Conversione litri / kg
-def conversioneLitri (quantitaDaConvertire):
-    IndiceDiConversione = 1.03
-    totaleLitri = quantitaDaConvertire / IndiceDiConversione
-    return totaleLitri
-#Conversione LITRI a KG
-def conversioneKg(quantitaDaConvertire):
-    IndiceDiConversione = 1.03
-    totaleKg = IndiceDiConversione * quantitaDaConvertire
-    return totaleKg
+#Conversione litri / kg (per ora è tutto in litri)
+# def conversioneLitri (quantitaDaConvertire):
+#     IndiceDiConversione = 1.03
+#     totaleLitri = quantitaDaConvertire / IndiceDiConversione
+#     return totaleLitri
+#Conversione LITRI a KG (per ora è tutto in litri)
+# def conversioneKg(quantitaDaConvertire):
+#     IndiceDiConversione = 1.03
+#     totaleKg = IndiceDiConversione * quantitaDaConvertire
+#     return totaleKg
 
 ################## SEZIONE PASTORIZZAZIONE DEL LATTE #####################################
 ############## ############ ############# ############### ################# ##############
@@ -36,9 +36,6 @@ def ConsumoElettricoPastorizzazione(numero_vasche,giorni):
     consumo_kw_ore_di_lavoro = dati.ore_lavoro_vasche_giorno * dati.consumo_vasca_KWh * numero_vasche * giorni
     Costo_totale = consumo_kw_ore_di_lavoro * dati.costo_kwh_medio
     return giorni,dati.ore_lavoro_vasche_giorno,consumo_kw_ore_di_lavoro,Costo_totale
-#Quanto latte al giorno riesco a pastorizzare ?
-#Cosa mi serve sapere per capire quanto posso pastorizzare ? Il tempo è ininfluente perchè ci vogliono pochi secondi
-#Quello che fa la differenza è : 
 
 #LATTE PRODOTTO AL GIORNO
 def prod_latte_giorno(latte_A,latte_B,mandria_A,mandria_B,scarto_mungitura,scarto_macchinari):
@@ -68,19 +65,15 @@ def collo_bottigli_pastorizzazione_giorno(numeroVasche,capacitaVasca,oreFunziona
 
 pastorizzazione_reale_giorno_totale = collo_bottigli_pastorizzazione_giorno(numero_vasche,capacità_vasca,ore_funzionamento)
 
-#ECCESSO DI PRODUZZIONE
-#IN QUESTA SEZIONE GESTISCO L'ECCESSO DI PRODUZIONE CHE NON VIENE PASTORIZZATO PER MANCANZA DI IMPIANTI
+#ECCESSO DI PRODUZZIONE vs CAPACITà DI PASTORIZZAZIONE
 latte_giornaliero_atteso,latte_giornalieto_munto = prod_latte_giorno(latte_A,latte_B,mandria_A,mandria_B,scarto_mungitura,scarto_macchinari) 
 capacita_massima_past_giorno = collo_bottigli_pastorizzazione_giorno(numero_vasche,capacità_vasca,ore_funzionamento)#qui metto la capacità massima di pastorizzazione
 
-#qui controllo l'avanzo del lattte sottoposto alla pastorizzazione
 latte_avanzato = 0
 latte_pastorizzato = 0
-
 if(latte_giornalieto_munto > capacita_massima_past_giorno): 
     latte_avanzato = latte_giornalieto_munto - capacita_massima_past_giorno 
     latte_pastorizzato = capacita_massima_past_giorno
-
 else:
     latte_pastorizzato = latte_giornalieto_munto
 
@@ -118,12 +111,13 @@ TotYogurtProdotto,TotGudaganoVenditaInKG,costoKg,scarto = produzioneYogurt(dati.
 scarto_in_percentuale = scarto * 100
 
 #LATTE PASTORIZZATO NON DESTINATO ALLO YOGURT
-def lattePastorizzatoNonConvertitoInYogurt(lattePastorizzato,quantoLatteNonVaAlloYogurt,prezzoVenditaLattePast):
-    latte_past_rimasto_dopo_yogurt = lattePastorizzato - quantoLatteNonVaAlloYogurt
+def lattePastorizzatoNonConvertitoInYogurt(lattePastorizzato,percentuale_latte_dedicato_allo_yogurt,prezzoVenditaLattePast):
+    latte_usato_per_yogurt = percentuale_latte_dedicato_allo_yogurt * lattePastorizzato
+    latte_past_rimasto_dopo_yogurt = lattePastorizzato - latte_usato_per_yogurt
     vendita_totale_latte_rimasto = latte_past_rimasto_dopo_yogurt * prezzoVenditaLattePast
     return latte_past_rimasto_dopo_yogurt,vendita_totale_latte_rimasto
 
-latte_pastorizzato_non_destinato_allo_yogurt, vendita_latte_past_non_destinato_allo_yogurt = lattePastorizzatoNonConvertitoInYogurt(latte_pastorizzato,TotYogurtProdotto,dati.prezzo_latte_pastorizzato)
+latte_pastorizzato_non_destinato_allo_yogurt, vendita_latte_past_non_destinato_allo_yogurt = lattePastorizzatoNonConvertitoInYogurt(latte_pastorizzato,dati.percentuale_latte_dedicato_allo_yogurt,dati.prezzo_latte_pastorizzato)
 
 #Produzione Yogurt + Vendità latte pastorizzato Guadagno totale
 guadagno_totale_yogurt_latte_pastorizzato = TotGudaganoVenditaInKG + vendita_latte_past_non_destinato_allo_yogurt
