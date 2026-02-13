@@ -85,21 +85,38 @@ if(latte_giornalieto_munto > capacita_massima_past_giorno):
 else:
     latte_pastorizzato = latte_giornalieto_munto
 
-########.   REPORT SEZIONE PASTORIZZAZIONE LATTE E VENDITA / ANCHE SUL CRUDO .####################
-print(f"Capacità massima di pastorizzazione:{pastorizzazione_reale_giorno_totale} litri")
-print(f"Scarto Mungitura {dati.scarto_mungitura * 100} %")
-print(f"Scarto Macchinari {dati.scarto_macchinari * 100} %")
-#Latte torico (senza scarto)
-print(f"Latte munto Atteso : {latte_giornaliero_atteso:.2f} litri")
-print(f"Latte pastorizzato effettivo : {latte_pastorizzato:.2f} litri")
-#Latte munto con lo scarto 
-print(f"Latte non pastorizzato: {latte_avanzato:.2f} litri")
-vendita_latte_crudo = latte_avanzato * dati.prezzo_latte_crudo 
-print(f"Abbiamo ricavato {vendita_latte_crudo:.2f} Euro dalla vendità del latte crudo")
-vendita_latte_pastorizzato = latte_pastorizzato * dati.prezzo_latte_pastorizzato
-print(f"Abbiamo ricavato {vendita_latte_pastorizzato:.2f} Euro dalla vendità del latte pastorizzato")
+#Se vendo yogurt, allora devo considerare i litri di latte totali che destinerò allo yogurt e venderò la rimanenza
+#Blocco da finire 
+flag_su_produzione_yogurt = dati.flag_pastorizzazione
+if flag_su_produzione_yogurt != True:
+    pass
+else:
+    ########.   REPORT SEZIONE PASTORIZZAZIONE LATTE E VENDITA / ANCHE SUL CRUDO .####################
+    print(f"Capacità massima di pastorizzazione:{pastorizzazione_reale_giorno_totale} litri")
+    print(f"Scarto Mungitura {dati.scarto_mungitura * 100} %")
+    print(f"Scarto Macchinari {dati.scarto_macchinari * 100} %")
+    #Latte torico (senza scarto)
+    print(f"Latte munto Atteso : {latte_giornaliero_atteso:.2f} litri")
+    print(f"Latte pastorizzato effettivo : {latte_pastorizzato:.2f} litri")
+    #Latte munto con lo scarto 
+    print(f"Latte non pastorizzato: {latte_avanzato:.2f} litri")
+    vendita_latte_crudo = latte_avanzato * dati.prezzo_latte_crudo 
+    print(f"Abbiamo ricavato {vendita_latte_crudo:.2f} Euro dalla vendità del latte crudo")
+    vendita_latte_pastorizzato = latte_pastorizzato * dati.prezzo_latte_pastorizzato
+    print(f"Abbiamo ricavato {vendita_latte_pastorizzato:.2f} Euro dalla vendità del latte pastorizzato")
 
 ###########TRASFORMAZIONE DEL LATTE PASTORIZZATO IN YOGURT #################################################
+#Controllo flag di produzione yogurt
+controllo_se_converto_in_yogurt = dati.flag_yogurt
 
-#conversione da latte pastorizzato a yogurt
-#
+def produzioneYogurt(quantoLattePastConverto,lattePastorizzato,costoAlKg):
+    yogurtProdotto = quantoLattePastConverto * lattePastorizzato
+    guadagnoVendita = yogurtProdotto * costoAlKg
+    return yogurtProdotto, guadagnoVendita,costoAlKg
+
+if controllo_se_converto_in_yogurt == True:
+    TotYogurtProdotto,TotGudaganoVenditaInKG,costoKg = produzioneYogurt(dati.percentuale_latte_dedicato_allo_yogurt,latte_pastorizzato,dati.prezzo_vendita_yogurt_fine_processo_kg)
+    print(f"Yogurt prodotto:{TotYogurtProdotto:.2f} Kg \n"f"Guadagno yogurt prodottto {TotGudaganoVenditaInKG:.2f} Euro.\n"f"E stato venduto a {costoKg} euro al KG.")
+else:
+    pass
+
