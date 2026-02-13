@@ -73,8 +73,7 @@ pastorizzazione_reale_giorno_totale = collo_bottigli_pastorizzazione_giorno(nume
 latte_giornaliero_atteso,latte_giornalieto_munto = prod_latte_giorno(latte_A,latte_B,mandria_A,mandria_B,scarto_mungitura,scarto_macchinari) 
 capacita_massima_past_giorno = collo_bottigli_pastorizzazione_giorno(numero_vasche,capacità_vasca,ore_funzionamento)#qui metto la capacità massima di pastorizzazione
 
-#qui controllo l'avanzo
-#Ho aggiunto la variabil eccesso, che poi utilizzerò per il latte in eccesso
+#qui controllo l'avanzo del lattte sottoposto alla pastorizzazione
 latte_avanzato = 0
 latte_pastorizzato = 0
 
@@ -88,9 +87,7 @@ else:
 #Se vendo yogurt, allora devo considerare i litri di latte totali che destinerò allo yogurt e venderò la rimanenza
 #Blocco da finire 
 flag_su_produzione_yogurt = dati.flag_pastorizzazione
-if flag_su_produzione_yogurt != True:
-    pass
-else:
+if flag_su_produzione_yogurt == True:
     ########.   REPORT SEZIONE PASTORIZZAZIONE LATTE E VENDITA / ANCHE SUL CRUDO .####################
     print(f"Capacità massima di pastorizzazione:{pastorizzazione_reale_giorno_totale} litri")
     print(f"Scarto Mungitura {dati.scarto_mungitura * 100} %")
@@ -104,19 +101,38 @@ else:
     print(f"Abbiamo ricavato {vendita_latte_crudo:.2f} Euro dalla vendità del latte crudo")
     vendita_latte_pastorizzato = latte_pastorizzato * dati.prezzo_latte_pastorizzato
     print(f"Abbiamo ricavato {vendita_latte_pastorizzato:.2f} Euro dalla vendità del latte pastorizzato")
-
+else:
+    pass
 ###########TRASFORMAZIONE DEL LATTE PASTORIZZATO IN YOGURT #################################################
 #Controllo flag di produzione yogurt
 controllo_se_converto_in_yogurt = dati.flag_yogurt
 
-def produzioneYogurt(quantoLattePastConverto,lattePastorizzato,costoAlKg):
-    yogurtProdotto = quantoLattePastConverto * lattePastorizzato
+def produzioneYogurt(quantoLattePastConverto,lattePastorizzato,costoAlKg,scarto):
+    # 1000 litri di latte pastorizzato = 1 kg circa, per semplciità mantengo questo indice di conversione.
+    # La resa reale e' gestita dal parametro "scarto" (es. 0.99).
+    yogurtProdotto = quantoLattePastConverto * lattePastorizzato * scarto
     guadagnoVendita = yogurtProdotto * costoAlKg
-    return yogurtProdotto, guadagnoVendita,costoAlKg
+    return yogurtProdotto, guadagnoVendita,costoAlKg,scarto
 
+TotYogurtProdotto,TotGudaganoVenditaInKG,costoKg,scarto = produzioneYogurt(dati.percentuale_latte_dedicato_allo_yogurt,latte_pastorizzato,dati.prezzo_vendita_yogurt_fine_processo_kg,dati.percentuale_di_riuscita_resa_yogurt)
+scarto_in_percentuale = scarto * 100
+
+#LATTE PASTORIZZATO NON DESTINATO ALLO YOGURT
+def lattePastorizzatoNonConvertitoInYogurt(lattePastorizzato,quantoLatteNonVaAlloYogurt,prezzoVenditaLattePast):
+    latte_past_rimasto_dopo_yogurt = lattePastorizzato - quantoLatteNonVaAlloYogurt
+    vendita_totale_latte_rimasto = latte_past_rimasto_dopo_yogurt * prezzoVenditaLattePast
+    return latte_past_rimasto_dopo_yogurt,vendita_totale_latte_rimasto
+
+latte_pastorizzato_non_destinato_allo_yogurt, vendita_latte_past_non_destinato_allo_yogurt = lattePastorizzatoNonConvertitoInYogurt(latte_pastorizzato,TotYogurtProdotto,dati.prezzo_latte_pastorizzato)
+
+#Produzione Yogurt + Vendità latte pastorizzato Guadagno totale
+guadagno_totale_yogurt_latte_pastorizzato = TotGudaganoVenditaInKG + vendita_latte_past_non_destinato_allo_yogurt
+
+#Blocco if che regola il report su yogurt o solo su latte pastorizzato
 if controllo_se_converto_in_yogurt == True:
-    TotYogurtProdotto,TotGudaganoVenditaInKG,costoKg = produzioneYogurt(dati.percentuale_latte_dedicato_allo_yogurt,latte_pastorizzato,dati.prezzo_vendita_yogurt_fine_processo_kg)
-    print(f"Yogurt prodotto:{TotYogurtProdotto:.2f} Kg \n"f"Guadagno yogurt prodottto {TotGudaganoVenditaInKG:.2f} Euro.\n"f"E stato venduto a {costoKg} euro al KG.")
+    print(f"Yogurt prodotto:{TotYogurtProdotto:.2f} Kg \n"f"Guadagno yogurt prodottto {TotGudaganoVenditaInKG:.2f} Euro.\n"f"E stato venduto a {costoKg} euro al KG.\nAbbiamo avuto una riuscita di {scarto_in_percentuale} %")
+    print(f"Latte pastorizzato rimasto per la vendita {latte_pastorizzato_non_destinato_allo_yogurt:.2f}\n"f"Guadagno {vendita_latte_past_non_destinato_allo_yogurt:.2f} Euro.")
+    print(f"Guadagno totale Latte + Yogurt {guadagno_totale_yogurt_latte_pastorizzato:.2f}")
 else:
     pass
 

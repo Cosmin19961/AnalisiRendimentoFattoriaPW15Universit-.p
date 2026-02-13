@@ -7,7 +7,7 @@ mandria_B = 100 #100 mucche B produzione B
 
 #PREZZO VENDITA LATTE A CRUDO
 prezzo_latte_crudo = 1.50 #prezzo indicativo
-prezzo_latte_pastorizzato = 2.50 #prezzo indicativo
+prezzo_latte_pastorizzato = 1.70 #prezzo indicativo
 
 #SETTING VASCHE PASTORIZZAZIONE
 numero_vasche_pastorizzazione = 10
@@ -24,5 +24,5 @@ costo_kwh_medio = 0.2797 #€/kWh
 #DATI PRODUZIONE YOGURT
 percentuale_latte_dedicato_allo_yogurt = 0.50 #decido quanto latte viene venduto pastorizzato e quanto invece viene destinato allo yogurt
 flag_yogurt = True
-percentuale_di_riuscita_resa_yogurt = 0.99 #tiene conto dello scarto, per ora lo metto quasi al 100%
-prezzo_vendita_yogurt_fine_processo_kg = 2 * 10 # *10 in modo da avere 1000 lt == 1 kg circa di yogurt
+percentuale_di_riuscita_resa_yogurt = 0.95 #tiene conto dello scarto, per ora lo metto quasi al 100%
+prezzo_vendita_yogurt_fine_processo_kg = 2.50 * 10 # *10 in modo da avere 1000 lt == 1 kg circa di yogurt
