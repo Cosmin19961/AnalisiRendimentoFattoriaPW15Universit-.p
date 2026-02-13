@@ -21,8 +21,6 @@ def conversioneKg(quantitaDaConvertire):
     totaleKg = IndiceDiConversione * quantitaDaConvertire
     return totaleKg
 
-
-
 ################## SEZIONE PASTORIZZAZIONE DEL LATTE #####################################
 ############## ############ ############# ############### ################# ##############
 
@@ -47,7 +45,7 @@ def prod_latte_giorno(latte_A,latte_B,mandria_A,mandria_B,scarto_mungitura,scart
     tot_prod_latte_giorno = (latte_A * mandria_A) + (latte_B * mandria_B)
     tot_scarto = (scarto_mungitura + scarto_macchinari) * tot_prod_latte_giorno
     tot_latte_realistico_giorno = tot_prod_latte_giorno - tot_scarto
-    return tot_latte_realistico_giorno,tot_prod_latte_giorno
+    return tot_prod_latte_giorno,tot_latte_realistico_giorno
 
 latte_A= Bestiame_litri_giorno["A"]
 latte_B= Bestiame_litri_giorno["B"]
@@ -69,7 +67,6 @@ def collo_bottigli_pastorizzazione_giorno(numeroVasche,capacitaVasca,oreFunziona
     return capacità_totale
 
 pastorizzazione_reale_giorno_totale = collo_bottigli_pastorizzazione_giorno(numero_vasche,capacità_vasca,ore_funzionamento)
-print("Capacità massima di pastorizzazione :",pastorizzazione_reale_giorno_totale)
 
 #ECCESSO DI PRODUZZIONE
 #IN QUESTA SEZIONE GESTISCO L'ECCESSO DI PRODUZIONE CHE NON VIENE PASTORIZZATO PER MANCANZA DI IMPIANTI
@@ -89,22 +86,20 @@ else:
     latte_pastorizzato = latte_giornalieto_munto
 
 ########.   REPORT SEZIONE PASTORIZZAZIONE LATTE E VENDITA / ANCHE SUL CRUDO .####################
+print(f"Capacità massima di pastorizzazione:{pastorizzazione_reale_giorno_totale} litri")
 print(f"Scarto Mungitura {dati.scarto_mungitura * 100} %")
 print(f"Scarto Macchinari {dati.scarto_macchinari * 100} %")
 #Latte torico (senza scarto)
-print(f"Latte munto Atteso : {latte_giornaliero_atteso}")
+print(f"Latte munto Atteso : {latte_giornaliero_atteso:.2f} litri")
+print(f"Latte pastorizzato effettivo : {latte_pastorizzato:.2f} litri")
 #Latte munto con lo scarto 
-print(f"Abbiamo avanzato {latte_avanzato:.2f} litri di latte")
+print(f"Latte non pastorizzato: {latte_avanzato:.2f} litri")
 vendita_latte_crudo = latte_avanzato * dati.prezzo_latte_crudo 
 print(f"Abbiamo ricavato {vendita_latte_crudo:.2f} Euro dalla vendità del latte crudo")
 vendita_latte_pastorizzato = latte_pastorizzato * dati.prezzo_latte_pastorizzato
 print(f"Abbiamo ricavato {vendita_latte_pastorizzato:.2f} Euro dalla vendità del latte pastorizzato")
 
+###########TRASFORMAZIONE DEL LATTE PASTORIZZATO IN YOGURT #################################################
 
-
-
-#Definisco 3 output attesi dal programma 
-#Latte intero / Yogurt / Formaggio Stagionato
-# Latte: mungitura → trattamento/pastorizzazione → confezionamento
-# Yogurt: mungitura → pastorizzazione → fermentazione → confezionamento
-# Formaggio: mungitura → cagliata → salatura → stagionatura → confezionamento
+#conversione da latte pastorizzato a yogurt
+#
