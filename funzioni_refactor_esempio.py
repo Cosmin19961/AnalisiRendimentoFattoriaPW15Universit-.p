@@ -65,11 +65,6 @@ def lattePastorizzatoNonConvertitoInYogurt(
     vendita_totale_latte_rimasto = latte_past_rimasto_dopo_yogurt * prezzoVenditaLattePast
     return latte_past_rimasto_dopo_yogurt, vendita_totale_latte_rimasto
 
-
-def _stampa(chiave, **kwargs):  # CAMBIO
-    print(MESSAGGI_STAMPA[chiave].format(**kwargs))  # CAMBIO
-
-
 def esegui_report():  # CAMBIO
     latte_A = Bestiame_litri_giorno["A"]
     latte_B = Bestiame_litri_giorno["B"]
@@ -184,6 +179,16 @@ def esegui_report():  # CAMBIO
     _stampa("prova", prova=prova)  # CAMBIO
     _stampa("latte_pastorizzato", latte_pastorizzato=latte_pastorizzato)  # CAMBIO
 
+#Questa funzione serve per richiamare il report di stampa.
+#Cosa fa esattamente ?
+#Riceve una chiave in ingresso (esempio ltte_munto_atteso) 
+#prende il messaggio di stampa contenuto nel report con la relativa chiave e stampa i parametri 
+#Perchè utilizzo kwargs?
+#Per via dell'utilizzo del report nel dizionario, se lo richiamassi senza kwargs mi tornerebbe una stringa e non il valore effettivo calcolato dalla funzione che ho richiesto.
+#kwargs -> raccoglie il valore
+#.format(**kwargs) lo inserisce nel testo 
+def _stampa(chiave, **kwargs):  # CAMBIO
+    print(MESSAGGI_STAMPA[chiave].format(**kwargs))  # CAMBIO
 
 MESSAGGI_STAMPA = {  # CAMBIO
     "capacita_massima_pastorizzazione": "Capacità massima di pastorizzazione:{pastorizzazione_reale_giorno_totale} litri",  # CAMBIO
