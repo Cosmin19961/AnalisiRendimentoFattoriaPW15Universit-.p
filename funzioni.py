@@ -10,16 +10,6 @@ Bestiame_litri_giorno = {}
 for razza,litri in Bestiame.items():
     Bestiame_litri_giorno[razza] = litri / dati.mucca_lattazione
 
-#Conversione litri / kg (per ora è tutto in litri)
-# def conversioneLitri (quantitaDaConvertire):
-#     IndiceDiConversione = 1.03
-#     totaleLitri = quantitaDaConvertire / IndiceDiConversione
-#     return totaleLitri
-#Conversione LITRI a KG (per ora è tutto in litri)
-# def conversioneKg(quantitaDaConvertire):
-#     IndiceDiConversione = 1.03
-#     totaleKg = IndiceDiConversione * quantitaDaConvertire
-#     return totaleKg
 
 ################## SEZIONE PASTORIZZAZIONE DEL LATTE #####################################
 ############## ############ ############# ############### ################# ##############
@@ -50,9 +40,6 @@ mandria_A= dati.mandria_A
 mandria_B= dati.mandria_B
 scarto_mungitura = dati.scarto_mungitura
 scarto_macchinari = dati.scarto_macchinari
-
-# latte_totale_giorno = prod_latte_giorno(latte_A,latte_B,mandria_A,mandria_B,scarto_mungitura,scarto_macchinari)
-# print(f"{latte_totale_giorno:.2f} Litri/Giorno")
 
 #CAPACITA MASSIMA DI PASTORIZZAZIONE
 numero_vasche = dati.numero_vasche_pastorizzazione 
@@ -130,3 +117,13 @@ if controllo_se_converto_in_yogurt == True:
 else:
     pass
 
+#TEST DI COERENZA SU QUANTO ALTTE UTILIZZO E QUANTO NE HO DAVVERO
+latte_usato_yogurt = latte_pastorizzato * dati.percentuale_latte_dedicato_allo_yogurt
+
+yogurt_prodotto = latte_usato_yogurt * dati.percentuale_di_riuscita_resa_yogurt
+
+latte_rimasto = latte_pastorizzato - latte_usato_yogurt
+
+prova = latte_usato_yogurt + latte_rimasto
+print("prova",prova)
+print("latte pastorizzato", latte_pastorizzato)
