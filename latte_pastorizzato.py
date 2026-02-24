@@ -17,12 +17,12 @@ for razza,litri in Bestiame.items():
 ############## ############ ############# ############### ################# ##############
 
 #Mi dice quanto latte pastorizzo considerando lo scarto di lavorazione di 5%
-def Pastorizzazione(litriLatte):
+""" def Pastorizzazione(litriLatte):
     scarto = 0.05 #supponiamo che il 5% del latte lo perdiamo
     scarto_litri = litriLatte * scarto
     litri_effettivi_pastorizzati = litriLatte - scarto_litri
     return litri_effettivi_pastorizzati #Mi ritorna i litri effettivi di latte pastorizzato
-
+ """
 #Consumo elettrico della vasca da 300 Litri
 def ConsumoElettricoPastorizzazione(numero_vasche,giorni):
     consumo_kw_ore_di_lavoro = dati.ore_lavoro_vasche_giorno * dati.consumo_vasca_KWh * numero_vasche * giorni
@@ -42,12 +42,12 @@ def collo_bottigli_pastorizzazione_giorno(numeroVasche,capacitaVasca,oreFunziona
     return capacità_totale
 
 def run():  #hocambiato
-    latte_A= Bestiame_litri_giorno["A"]
-    latte_B= Bestiame_litri_giorno["B"]
-    mandria_A= dati.mandria_A
-    mandria_B= dati.mandria_B
-    scarto_mungitura = dati.scarto_mungitura
-    scarto_macchinari = dati.scarto_macchinari
+    latte_A= Bestiame_litri_giorno["A"] #Prendo i litri di latte generati dai capi A dal dizionario 
+    latte_B= Bestiame_litri_giorno["B"] #Prendo i litri di altte generati dai capi B dal dizionario
+    mandria_A= dati.mandria_A #Prendo da DATI la quantità di capi A
+    mandria_B= dati.mandria_B #Prendo da DATI la quantità di capi B
+    scarto_mungitura = dati.scarto_mungitura #Importo da dati lo scarto della mungitura
+    scarto_macchinari = dati.scarto_macchinari #Importo da dati lo scarto generato dai macchinari
 
     numero_vasche = dati.numero_vasche_pastorizzazione
     capacità_vasca = dati.capacita_vasca
