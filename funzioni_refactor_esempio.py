@@ -102,21 +102,21 @@ def esegui_report():  # CAMBIO
     flag_su_produzione_yogurt = dati.flag_pastorizzazione
     if flag_su_produzione_yogurt is True:
         ########.   REPORT SEZIONE PASTORIZZAZIONE LATTE E VENDITA / ANCHE SUL CRUDO .####################
-        _stampa(  # CAMBIO
+        stampa_report(  # CAMBIO
             "capacita_massima_pastorizzazione",
             pastorizzazione_reale_giorno_totale=pastorizzazione_reale_giorno_totale,
         )
-        _stampa("scarto_mungitura", scarto_mungitura_percent=dati.scarto_mungitura * 100)  # CAMBIO
-        _stampa("scarto_macchinari", scarto_macchinari_percent=dati.scarto_macchinari * 100)  # CAMBIO
+        stampa_report("scarto_mungitura", scarto_mungitura_percent=dati.scarto_mungitura * 100)  # CAMBIO
+        stampa_report("scarto_macchinari", scarto_macchinari_percent=dati.scarto_macchinari * 100)  # CAMBIO
         # Latte torico (senza scarto)
-        _stampa("latte_munto_atteso", latte_giornaliero_atteso=latte_giornaliero_atteso)  # CAMBIO
-        _stampa("latte_pastorizzato_effettivo", latte_pastorizzato=latte_pastorizzato)  # CAMBIO
+        stampa_report("latte_munto_atteso", latte_giornaliero_atteso=latte_giornaliero_atteso)  # CAMBIO
+        stampa_report("latte_pastorizzato_effettivo", latte_pastorizzato=latte_pastorizzato)  # CAMBIO
         # Latte munto con lo scarto
-        _stampa("latte_non_pastorizzato", latte_avanzato=latte_avanzato)  # CAMBIO
+        stampa_report("latte_non_pastorizzato", latte_avanzato=latte_avanzato)  # CAMBIO
         vendita_latte_crudo = latte_avanzato * dati.prezzo_latte_crudo
-        _stampa("ricavo_latte_crudo", vendita_latte_crudo=vendita_latte_crudo)  # CAMBIO
+        stampa_report("ricavo_latte_crudo", vendita_latte_crudo=vendita_latte_crudo)  # CAMBIO
         vendita_latte_pastorizzato = latte_pastorizzato * dati.prezzo_latte_pastorizzato
-        _stampa(  # CAMBIO
+        stampa_report(  # CAMBIO
             "ricavo_latte_pastorizzato",
             vendita_latte_pastorizzato=vendita_latte_pastorizzato,
         )
@@ -149,19 +149,19 @@ def esegui_report():  # CAMBIO
 
     # Blocco if che regola il report su yogurt o solo su latte pastorizzato
     if controllo_se_converto_in_yogurt is True:
-        _stampa(  # CAMBIO
+        stampa_report(  # CAMBIO
             "report_yogurt",
             TotYogurtProdotto=TotYogurtProdotto,
             TotGudaganoVenditaInKG=TotGudaganoVenditaInKG,
             costoKg=costoKg,
             scarto_in_percentuale=scarto_in_percentuale,
         )
-        _stampa(  # CAMBIO
+        stampa_report(  # CAMBIO
             "report_latte_past_rimasto",
             latte_pastorizzato_non_destinato_allo_yogurt=latte_pastorizzato_non_destinato_allo_yogurt,
             vendita_latte_past_non_destinato_allo_yogurt=vendita_latte_past_non_destinato_allo_yogurt,
         )
-        _stampa(  # CAMBIO
+        stampa_report(  # CAMBIO
             "guadagno_totale_latte_yogurt",
             guadagno_totale_yogurt_latte_pastorizzato=guadagno_totale_yogurt_latte_pastorizzato,
         )
@@ -174,10 +174,11 @@ def esegui_report():  # CAMBIO
     yogurt_prodotto = latte_usato_yogurt * dati.percentuale_di_riuscita_resa_yogurt
 
     latte_rimasto = latte_pastorizzato - latte_usato_yogurt
-
-    prova = latte_usato_yogurt + latte_rimasto
-    _stampa("prova", prova=prova)  # CAMBIO
-    _stampa("latte_pastorizzato", latte_pastorizzato=latte_pastorizzato)  # CAMBIO
+    
+    #IL TOTALE coerenza_latte == LATTE TOTALE PASTORIZZATO  #changereport
+    coerenza_latte = latte_usato_yogurt + latte_rimasto 
+    stampa_report("coerenza_latte", coerenza_latte=coerenza_latte)  # CAMBIO
+    stampa_report("latte_pastorizzato", latte_pastorizzato=latte_pastorizzato)  # CAMBIO
 
 #Questa funzione serve per richiamare il report di stampa.
 #Cosa fa esattamente ?
@@ -185,12 +186,13 @@ def esegui_report():  # CAMBIO
 #prende il messaggio di stampa contenuto nel report con la relativa chiave e stampa i parametri 
 #Perchè utilizzo kwargs?
 #Per via dell'utilizzo del report nel dizionario, se lo richiamassi senza kwargs mi tornerebbe una stringa e non il valore effettivo calcolato dalla funzione che ho richiesto.
-#kwargs -> raccoglie il valore
+#nome_variabile_da_ricercare = quale chiave del dizionario vuoi che ti stampo?
+# kwargs -> quale valore vuoi che ti riporto tra le parentesi ? se non mettessi questo, mi stamperebbe un messaggio di testo  non il contenuto della variabile
 #.format(**kwargs) lo inserisce nel testo 
-def _stampa(chiave, **kwargs):  # CAMBIO
-    print(MESSAGGI_STAMPA[chiave].format(**kwargs))  # CAMBIO
+def stampa_report(nome_variabile_da_ricercare, **kwargs):  # CAMBIO changereport
+    print(Contenitore_Stampa_Report[nome_variabile_da_ricercare].format(**kwargs))  # CAMBIO changereport
 
-MESSAGGI_STAMPA = {  # CAMBIO
+Contenitore_Stampa_Report = {  # CAMBIO
     "capacita_massima_pastorizzazione": "Capacità massima di pastorizzazione:{pastorizzazione_reale_giorno_totale} litri",  # CAMBIO
     "scarto_mungitura": "Scarto Mungitura {scarto_mungitura_percent} %",  # CAMBIO
     "scarto_macchinari": "Scarto Macchinari {scarto_macchinari_percent} %",  # CAMBIO
@@ -202,7 +204,7 @@ MESSAGGI_STAMPA = {  # CAMBIO
     "report_yogurt": "Yogurt prodotto:{TotYogurtProdotto:.2f} Kg \nGuadagno yogurt prodottto {TotGudaganoVenditaInKG:.2f} Euro.\nE stato venduto a {costoKg} euro al KG.\nAbbiamo avuto una riuscita di {scarto_in_percentuale} %",  # CAMBIO
     "report_latte_past_rimasto": "Latte pastorizzato rimasto per la vendita {latte_pastorizzato_non_destinato_allo_yogurt:.2f}\nGuadagno {vendita_latte_past_non_destinato_allo_yogurt:.2f} Euro.",  # CAMBIO
     "guadagno_totale_latte_yogurt": "Guadagno totale Latte + Yogurt {guadagno_totale_yogurt_latte_pastorizzato:.2f}",  # CAMBIO
-    "prova": "prova {prova}",  # CAMBIO
+    "coerenza_latte": "coerenza_latte {coerenza_latte}",  # CAMBIO
     "latte_pastorizzato": "latte pastorizzato {latte_pastorizzato}",  # CAMBIO
 }
 
