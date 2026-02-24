@@ -10,7 +10,6 @@ Bestiame_litri_giorno = {}
 for razza, litri in Bestiame.items():
     Bestiame_litri_giorno[razza] = litri / dati.mucca_lattazione
 
-
 ################## SEZIONE PASTORIZZAZIONE DEL LATTE #####################################
 ############## ############ ############# ############### ################# ##############
 
@@ -20,7 +19,6 @@ def Pastorizzazione(litriLatte):
     scarto_litri = litriLatte * scarto
     litri_effettivi_pastorizzati = litriLatte - scarto_litri
     return litri_effettivi_pastorizzati
-
 
 # Consumo elettrico della vasca da 300 Litri
 def ConsumoElettricoPastorizzazione(numero_vasche, giorni):
@@ -148,6 +146,7 @@ def esegui_report():  # CAMBIO
     )
 
     # Blocco if che regola il report su yogurt o solo su latte pastorizzato
+    #Da qui parte la produzione dello yogurt / se True significa che impiego una % di latte pastorizzato per la prod di yogurt #changereport
     if controllo_se_converto_in_yogurt is True:
         stampa_report(  # CAMBIO
             "report_yogurt",
@@ -175,9 +174,9 @@ def esegui_report():  # CAMBIO
 
     latte_rimasto = latte_pastorizzato - latte_usato_yogurt
     
-    #IL TOTALE coerenza_latte == LATTE TOTALE PASTORIZZATO  #changereport
-    coerenza_latte = latte_usato_yogurt + latte_rimasto 
-    stampa_report("coerenza_latte", coerenza_latte=coerenza_latte)  # CAMBIO
+    #IL TOTALE coerenza_latte_su_yogurt == LATTE TOTALE PASTORIZZATO  #changereport
+    coerenza_latte_su_yogurt = latte_usato_yogurt + latte_rimasto 
+    stampa_report("coerenza_latte_su_yogurt", coerenza_latte_su_yogurt=coerenza_latte_su_yogurt)  # CAMBIO
     stampa_report("latte_pastorizzato", latte_pastorizzato=latte_pastorizzato)  # CAMBIO
 
 #Questa funzione serve per richiamare il report di stampa.
@@ -189,6 +188,9 @@ def esegui_report():  # CAMBIO
 #nome_variabile_da_ricercare = quale chiave del dizionario vuoi che ti stampo?
 # kwargs -> quale valore vuoi che ti riporto tra le parentesi ? se non mettessi questo, mi stamperebbe un messaggio di testo  non il contenuto della variabile
 #.format(**kwargs) lo inserisce nel testo 
+
+
+################################# CONTENITORE STAMPE #############################################################
 def stampa_report(nome_variabile_da_ricercare, **kwargs):  # CAMBIO changereport
     print(Contenitore_Stampa_Report[nome_variabile_da_ricercare].format(**kwargs))  # CAMBIO changereport
 
@@ -204,8 +206,8 @@ Contenitore_Stampa_Report = {  # CAMBIO
     "report_yogurt": "Yogurt prodotto:{TotYogurtProdotto:.2f} Kg \nGuadagno yogurt prodottto {TotGudaganoVenditaInKG:.2f} Euro.\nE stato venduto a {costoKg} euro al KG.\nAbbiamo avuto una riuscita di {scarto_in_percentuale} %",  # CAMBIO
     "report_latte_past_rimasto": "Latte pastorizzato rimasto per la vendita {latte_pastorizzato_non_destinato_allo_yogurt:.2f}\nGuadagno {vendita_latte_past_non_destinato_allo_yogurt:.2f} Euro.",  # CAMBIO
     "guadagno_totale_latte_yogurt": "Guadagno totale Latte + Yogurt {guadagno_totale_yogurt_latte_pastorizzato:.2f}",  # CAMBIO
-    "coerenza_latte": "coerenza_latte {coerenza_latte}",  # CAMBIO
-    "latte_pastorizzato": "latte pastorizzato {latte_pastorizzato}",  # CAMBIO
+    "coerenza_latte_su_yogurt": "Totale latte impiegato tra yogurt e rimanenza pastorizzata {coerenza_latte_su_yogurt:.0f}",  # CAMBIO changereport
+    "latte_pastorizzato": "latte pastorizzato {latte_pastorizzato:.0f}",  # CAMBIO changereport
 }
 
 
