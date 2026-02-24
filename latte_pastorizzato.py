@@ -13,7 +13,6 @@ Bestiame_litri_giorno = {}
 for razza,litri in Bestiame.items():
     Bestiame_litri_giorno[razza] = litri / dati.mucca_lattazione
 
-
 ################## SEZIONE PASTORIZZAZIONE DEL LATTE #####################################
 ############## ############ ############# ############### ################# ##############
 
@@ -22,7 +21,7 @@ def Pastorizzazione(litriLatte):
     scarto = 0.05 #supponiamo che il 5% del latte lo perdiamo
     scarto_litri = litriLatte * scarto
     litri_effettivi_pastorizzati = litriLatte - scarto_litri
-    return litri_effettivi_pastorizzati
+    return litri_effettivi_pastorizzati #Mi ritorna i litri effettivi di latte pastorizzato
 
 #Consumo elettrico della vasca da 300 Litri
 def ConsumoElettricoPastorizzazione(numero_vasche,giorni):

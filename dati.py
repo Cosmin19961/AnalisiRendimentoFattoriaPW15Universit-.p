@@ -2,7 +2,7 @@
 stima_su_quanti_giorni = 1
 unita_di_misura = 1
 mucca_lattazione = 305
-mandria_A = 150 #100 mucche A produzione A
+mandria_A = 100 #100 mucche A produzione A
 mandria_B = 100 #100 mucche B produzione B
 
 #PREZZO VENDITA LATTE A CRUDO
@@ -26,3 +26,4 @@ percentuale_latte_dedicato_allo_yogurt = 0.65 #decido quanto latte viene venduto
 flag_yogurt = True 
 percentuale_di_riuscita_resa_yogurt = 0.95 #tiene conto dello scarto, per ora lo metto quasi al 100%
 prezzo_vendita_yogurt_fine_processo_kg = 2.50 * 10 # *10 in modo da avere 1000 lt == 1 kg circa di yogurt
+debug_coerenza_totale_latte = True

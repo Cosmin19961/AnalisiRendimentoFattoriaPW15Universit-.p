@@ -65,8 +65,14 @@ def run(latte_pastorizzato):  #hocambiato
     yogurt_prodotto = latte_usato_yogurt * dati.percentuale_di_riuscita_resa_yogurt
     latte_rimasto = latte_pastorizzato - latte_usato_yogurt
 
-    prova = latte_usato_yogurt + latte_rimasto
-    print("prova",prova)
-    print("latte pastorizzato", latte_pastorizzato)
+#### DEBUG PRODUZIONE YOGURT ####
+#### Se dopo la conversione del latte pastorizzato in yogurt ho un'incongruenza tra il totale latte utilizzato e rimanenza eventuale. 
+#### Sul totale prodotto, mi genera un errore. Serve ad evitare di aver trasformato più latte di quello effettivamente prodotto in totale.
+    if dati.debug_coerenza_totale_latte == True:
+        coerenza_totale_latte_dopo_produzione_yogurt = latte_usato_yogurt + latte_rimasto
+        print("coerenza_totale_latte_dopo_produzione_yogurt",coerenza_totale_latte_dopo_produzione_yogurt)
+        print(f"Totale latte pastorizzato usato per lo yogurt + latte rimasto pastorizzato {coerenza_totale_latte_dopo_produzione_yogurt:.0f}")
+        print(f"Latte pastorizzato totale {latte_pastorizzato:.0f}")
+    else: pass
 
     return True  #hocambiato (solo per dire "finito", se non ti serve lo togliamo)
