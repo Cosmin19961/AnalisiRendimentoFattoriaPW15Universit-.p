@@ -70,9 +70,11 @@ def run(latte_pastorizzato):  #hocambiato
 #### Sul totale prodotto, mi genera un errore. Serve ad evitare di aver trasformato più latte di quello effettivamente prodotto in totale.
     if dati.debug_coerenza_totale_latte == True:
         coerenza_totale_latte_dopo_produzione_yogurt = latte_usato_yogurt + latte_rimasto
-        print("coerenza_totale_latte_dopo_produzione_yogurt",coerenza_totale_latte_dopo_produzione_yogurt)
-        print(f"Totale latte pastorizzato usato per lo yogurt + latte rimasto pastorizzato {coerenza_totale_latte_dopo_produzione_yogurt:.0f}")
-        print(f"Latte pastorizzato totale {latte_pastorizzato:.0f}")
-    else: pass
+        if coerenza_totale_latte_dopo_produzione_yogurt == latte_pastorizzato:
+            print("Hai coerenza nei dati tra yogurt / latte rimanente e totale latte pastorizzato prod")
+        else:    
+            print("coerenza_totale_latte_dopo_produzione_yogurt",coerenza_totale_latte_dopo_produzione_yogurt)
+            print(f"Totale latte pastorizzato usato per lo yogurt + latte rimasto pastorizzato {coerenza_totale_latte_dopo_produzione_yogurt:.0f}")
+            print(f"Latte pastorizzato totale {latte_pastorizzato:.0f}")
 
     return True  #hocambiato (solo per dire "finito", se non ti serve lo togliamo)
