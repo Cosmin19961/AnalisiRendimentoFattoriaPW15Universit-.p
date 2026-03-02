@@ -76,10 +76,10 @@ def run():  #hocambiato
         stampa_report("scarto_mungitura", scarto_mungitura_percent=dati.scarto_mungitura * 100)  #Mi da lo scarto della mungitura
         stampa_report("scarto_macchinari", scarto_macchinari_percent=dati.scarto_macchinari * 100) #Mi da lo scarto dei macchinari
         #Latte torico (senza scarto)
-        stampa_report("latte_munto_atteso", latte_giornaliero_atteso=latte_giornaliero_atteso)  #Mi da il latte che spero di ottenere
-        stampa_report("latte_pastorizzato_effettivo", latte_pastorizzato=latte_pastorizzato)  #Mi da il latte che ottengo effettivamente
+        stampa_report("latte_munto_in_teoria", latte_giornaliero_atteso=latte_giornaliero_atteso)  #Mi da il latte che spero di ottenere
+        stampa_report("latte_pastorizzato_effettivo_netto_scarti", latte_pastorizzato=latte_pastorizzato)  #Mi da il latte che ottengo effettivamente
         #Latte munto con lo scarto
-        stampa_report("latte_non_pastorizzato", latte_avanzato=latte_avanzato)  
+        stampa_report("latte_non_pastorizzato_supera_capacità_past", latte_avanzato=latte_avanzato)  
         vendita_latte_crudo = latte_avanzato * dati.prezzo_latte_crudo #Vendo il latte crudo * il prezzo del latte crudo importato da dati
         stampa_report("ricavo_latte_crudo", vendita_latte_crudo=vendita_latte_crudo)  #mando a schermo il ricavo del latte crudo
         vendita_latte_pastorizzato = latte_pastorizzato * dati.prezzo_latte_pastorizzato #Vendo il latte pastorizzato effettivamente * il prezzo del latte pastorizzato da dati
