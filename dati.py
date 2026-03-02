@@ -14,7 +14,7 @@ numero_vasche_pastorizzazione = 10
 capacita_vasca = 300 #litri
 consumo_vasca_KWh = 27
 ore_lavoro_vasche_giorno = 6 #ore
-flag_pastorizzazione = False
+flag_pastorizzazione = True
 
 scarto_mungitura = 0.02
 scarto_macchinari = 0.03

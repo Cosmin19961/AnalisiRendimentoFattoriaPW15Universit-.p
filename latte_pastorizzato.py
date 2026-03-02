@@ -69,22 +69,22 @@ def run():  #hocambiato
 
     #Se vendo yogurt, allora devo considerare i litri di latte totali che destinerò allo yogurt e venderò la rimanenza
     #Blocco da finire
-    flag_su_produzione_yogurt = dati.flag_pastorizzazione
-    if flag_su_produzione_yogurt == True:
+    flag_report_pastorizzazione = dati.flag_pastorizzazione
+    if flag_report_pastorizzazione == True: #Se l'interuttore è "acceso"
         ########.   REPORT SEZIONE PASTORIZZAZIONE LATTE E VENDITA / ANCHE SUL CRUDO .####################
-        stampa_report("capacita_massima_pastorizzazione", pastorizzazione_reale_giorno_totale=pastorizzazione_reale_giorno_totale)  #hocambiato
-        stampa_report("scarto_mungitura", scarto_mungitura_percent=dati.scarto_mungitura * 100)  #hocambiato
-        stampa_report("scarto_macchinari", scarto_macchinari_percent=dati.scarto_macchinari * 100)  #hocambiato
+        stampa_report("capacita_massima_pastorizzazione", pastorizzazione_reale_giorno_totale=pastorizzazione_reale_giorno_totale) #Quanti litri posso pastorizzare totale
+        stampa_report("scarto_mungitura", scarto_mungitura_percent=dati.scarto_mungitura * 100)  #Mi da lo scarto della mungitura
+        stampa_report("scarto_macchinari", scarto_macchinari_percent=dati.scarto_macchinari * 100) #Mi da lo scarto dei macchinari
         #Latte torico (senza scarto)
-        stampa_report("latte_munto_atteso", latte_giornaliero_atteso=latte_giornaliero_atteso)  #hocambiato
-        stampa_report("latte_pastorizzato_effettivo", latte_pastorizzato=latte_pastorizzato)  #hocambiato
+        stampa_report("latte_munto_atteso", latte_giornaliero_atteso=latte_giornaliero_atteso)  #Mi da il latte che spero di ottenere
+        stampa_report("latte_pastorizzato_effettivo", latte_pastorizzato=latte_pastorizzato)  #Mi da il latte che ottengo effettivamente
         #Latte munto con lo scarto
-        stampa_report("latte_non_pastorizzato", latte_avanzato=latte_avanzato)  #hocambiato
-        vendita_latte_crudo = latte_avanzato * dati.prezzo_latte_crudo
-        stampa_report("ricavo_latte_crudo", vendita_latte_crudo=vendita_latte_crudo)  #hocambiato
-        vendita_latte_pastorizzato = latte_pastorizzato * dati.prezzo_latte_pastorizzato
-        stampa_report("ricavo_latte_pastorizzato", vendita_latte_pastorizzato=vendita_latte_pastorizzato)  #hocambiato
+        stampa_report("latte_non_pastorizzato", latte_avanzato=latte_avanzato)  
+        vendita_latte_crudo = latte_avanzato * dati.prezzo_latte_crudo #Vendo il latte crudo * il prezzo del latte crudo importato da dati
+        stampa_report("ricavo_latte_crudo", vendita_latte_crudo=vendita_latte_crudo)  #mando a schermo il ricavo del latte crudo
+        vendita_latte_pastorizzato = latte_pastorizzato * dati.prezzo_latte_pastorizzato #Vendo il latte pastorizzato effettivamente * il prezzo del latte pastorizzato da dati
+        stampa_report("ricavo_latte_pastorizzato", vendita_latte_pastorizzato=vendita_latte_pastorizzato)  #Mando a schermo il ricavo totale del latte pastorizzato
     else:
         pass
 
-    return latte_pastorizzato  #hocambiato
+    return latte_pastorizzato  #Mi ritorna il latte pastorizzato in mood da poterlo utilizzare successivamente negli altri fogli per la produzione di yogurt e formaggio.
